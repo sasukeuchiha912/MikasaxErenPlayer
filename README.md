@@ -1,13 +1,13 @@
 
 
-<h1 align="centre">DAISYXMUSIC V4.5 🎵</h1>
+<h1 align="centre">ErenVC V4.5 🎵</h1>
 
 ### A bot that can play music on Telegram Group and Channel Voice Chats
 #### POWERED BY [PYTGCALLS](https://github.com/pytgcalls/pytgcalls)
-### Available on telegram as [@DaisyXbot](https://t.me/daisyxbot)
+### Available on telegram as [Eren](https://t.me/FoundingTitanRobot)
 
 <p align="center">
-  <img src="https://telegra.ph/file/dd04b1968f1bc1169d162.jpg">
+  <img src="https://telegra.ph/file/eeef5ddbe7f33338aa311.jpg">
 </p>
 
 <h2> Features 🔥 </h2>
