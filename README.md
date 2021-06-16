@@ -4,7 +4,7 @@
 
 ### A bot that can play music on Telegram Group and Channel Voice Chats
 #### POWERED BY [PYTGCALLS](https://github.com/pytgcalls/pytgcalls)
-### Available on telegram as [Eren](https://t.me/FoundingTitanRobot)
+### Available on telegram as [Gojou](https://t.me/FoundingTitanRobot)
 
 <p align="center">
   <img src="https://telegra.ph/file/0cba16069e51345dc60e4.jpg">
