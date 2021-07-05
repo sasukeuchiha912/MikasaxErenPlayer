@@ -1,13 +1,13 @@
 
 
-<h1 align="centre">GojouVC V4.5 🎵</h1>
+<h1 align="centre">EREN VC PLAYER V5.0 🎵</h1>
 
 ### A bot that can play music on Telegram Group and Channel Voice Chats
-#### POWERED BY [PYTGCALLS](https://github.com/pytgcalls/pytgcalls)
-### Available on telegram as [Gojou](https://t.me/GojoSataro_Robot)
+#### POWERED BY [MARSHALX TGCALLS](https://github.com/MarshalX/tgcalls)
+### Available on telegram as [@FoundingTitanRobot](https://t.me/FoundingTitanRobot)
 
 <p align="center">
-  <img src="https://telegra.ph/file/0cba16069e51345dc60e4.jpg">
+  <img src="https://telegra.ph/file/e8b0f937e2996410dd28a.jpg">
 </p>
 
 <h2> Features 🔥 </h2>
@@ -28,10 +28,11 @@
 
 ### 💜 Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/TeamOfDaisyX/DaisyXMusic)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/TeamDaisyX/DaisyXMusic)
 
 Get pyrogram (p)  `SESSION` from here:
-[![Run on Repl.it](https://repl.it/badge/github/SpEcHiDe/GenerateStringSession)](https://repl.it/@SpEcHiDe/GenerateStringSession)
+
+[![Run on Repl.it](https://repl.it/badge/github/ChankitSaini/GenerateStringSession)](https://replit.com/@ChankitSaini/GenerateStringSession)
 
 ### ⚔ Self-hosting (For Devs) 
 ```sh
@@ -40,11 +41,9 @@ $ git clone https://github.com/TeamDaisyX/DaisyXmusic
 $ cd DaisyXMusic
 # Upgrade sources
 # Install All Requirements 
-$ pip(3) install -r requirements.txt
-# Rename example.env to local.env and fill
-$ npm i -g npm
-# Start Bot 
-$ python(3) -m DaisyXMusic
+$ pip3 install -r requirements.txt
+# Fork This Repo and fill local.env and config.py both with your own values.Then Start The Bot
+$ python3 -m DaisyXMusic
 ```
 
 ### Commands for Group 🛠
@@ -119,14 +118,14 @@ DaisyXmusic is a modified version of [Callsmusic](https://github.com/callsmusic/
 
 #### Contribtors
 - [InukaASiTH](https://github.com/InukaAsith): Dev
-- [Rojserbest](http://github.com/rojserbes): Dev
+- [Technical-Hunter](https://github.com/Technical-Hunter): Dev
+- [Rojserbest](http://github.com/rojserbest): Dev
 - [Wrench](https://github.com/EverythingSuckz/): Dev
 - [Bemro](https://github.com/bemroofficial): Dev
 - [QueenArzoo](https://github.com/QueenArzoo): Dev
 - [lucifeermorningstar](https://github.com/lucifeermorningstar): Dev
-- [AuraXNetwork](https://github.com/AuraXNetwork/AuraXMusicBot)
 - [Hamker Cat](https://github.com/thehamkercat/)
 - [Anjana-Ma](https://github.com/Anjana-Ma): 
 - [ImJanindu](https://github.com/ImJanindu): 
-- [Laky](https://github.com/Laky-64) & [Andrew](https://github.com/AndrewLaneX): PyTgCalls
-- [Original Repo owners](https://github.com/suprojects/CallsMusic)
+- [MARSHALX](https://github.com/MarshalX): TgCalls
+- [Original Repo owners](https://github.com/CallsMusic/CallsMusic)
