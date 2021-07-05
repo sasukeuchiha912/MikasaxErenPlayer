@@ -456,7 +456,7 @@ async def play(_, message: Message):
     global useer
     if message.chat.id in DISABLED_GROUPS:
         return    
-    lel = await message.reply("🔄 **Processing**")
+    lel = await message.reply("🎵 **Processing**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
@@ -511,7 +511,7 @@ async def play(_, message: Message):
         )
         return
     text_links=None
-    await lel.edit("🔎 **Finding**")
+    await lel.edit("🔎 **Finding the song**")
     if message.reply_to_message:
         entities = []
         toxt = message.reply_to_message.text or message.reply_to_message.caption
@@ -732,7 +732,7 @@ async def ytplay(_, message: Message):
     global que
     if message.chat.id in DISABLED_GROUPS:
         return
-    lel = await message.reply("🔄 **Processing**")
+    lel = await message.reply("🎵 **Processing**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
@@ -1016,8 +1016,8 @@ async def deezer(client: Client, message_: Message):
 async def jiosaavn(client: Client, message_: Message):
     global que
     if message_.chat.id in DISABLED_GROUPS:
-        return    
-    lel = await message_.reply("🔄 **Processing**")
+        return     
+    lel = await message_.reply("🎵**Processing**...")
     administrators = await get_administrators(message_.chat)
     chid = message_.chat.id
     try:
@@ -1060,7 +1060,7 @@ async def jiosaavn(client: Client, message_: Message):
                     # print(e)
                     await lel.edit(
                         f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add @FoundingTitanVCRobot to your Group and try again</b>",
+                        "\n\nOr manually add @MikasaMusicplayer to your Group and try again</b>",
                     )
     try:
         await USER.get_chat(chid)
@@ -1172,7 +1172,7 @@ async def lol_cb(b, cb):
     if cb.from_user.id != useer_id:
         await cb.answer("You ain't the person who requested to play the song!", show_alert=True)
         return
-    await cb.message.edit("Hang On... Player Starting")
+    await cb.message.edit("Mikasa is Getting ready to play music hang on.....")
     x=int(x)
     try:
         useer_name = cb.message.reply_to_message.from_user.first_name
