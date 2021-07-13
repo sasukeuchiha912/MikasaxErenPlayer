@@ -1,3 +1,8 @@
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                     level=logging.INFO)
+
 from pyrogram import Client, idle 
 
 from DaisyXMusic.config import API_ID, API_HASH, BOT_TOKEN
