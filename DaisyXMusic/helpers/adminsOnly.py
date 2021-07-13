@@ -61,7 +61,7 @@ def adminsOnly(permission):
             userID = message.from_user.id
             permissions = await member_permissions(chatID, userID)
             if (
-                userID not in SUDOERS
+                userID not in SUDO_USERS
                 and permission not in permissions
             ):
                 return await unauthorised(
