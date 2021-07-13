@@ -39,7 +39,7 @@ async def get_administrators(chat: Chat) -> List[User]:
 
 
 
-async def member_permissions(chat_id, user_id):
+async def member_permissions(chat_id: int, user_id: int):
     perms = []
     member = await pbot.get_chat_member(chat_id, user_id)
     if member.can_post_messages:
