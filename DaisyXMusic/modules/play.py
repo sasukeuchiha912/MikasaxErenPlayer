@@ -43,6 +43,7 @@ from DaisyXMusic.helpers.admins import get_administrators
 from DaisyXMusic.helpers.channelmusic import get_chat_id
 from DaisyXMusic.helpers.errors import DurationLimitError
 from DaisyXMusic.helpers.decorators import errors
+from DaisyXMusic.helpers.adminsOnly import adminsOnly
 from DaisyXMusic.helpers.decorators import authorized_users_only
 from DaisyXMusic.helpers.filters import command, other_filters
 from DaisyXMusic.helpers.gets import get_file_name
@@ -237,7 +238,7 @@ async def settings(client, message):
 @Client.on_message(
     filters.command("musicplayer") & ~filters.edited & ~filters.bot & ~filters.private
 )
-@authorized_users_only
+@adminsOnly("can_change_info")
 async def hfmm(_, message):
     global DISABLED_GROUPS
     try:
@@ -246,7 +247,7 @@ async def hfmm(_, message):
         return
     if len(message.command) != 2:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and /musicplayer `off only`"
+            "I only recognize `/musicplayer on` and `/musicplayer off` only"
         )
         return
     status = message.text.split(None, 1)[1]
@@ -258,7 +259,7 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
-            f"Music Player Successfully Enabled For Users In The Chat {message.chat.id}"
+            f"Music Player Successfully Enabled For Users In The Chat!"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
@@ -269,7 +270,7 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.append(message.chat.id)
         await lel.edit(
-            f"Music Player Successfully Deactivated For Users In The Chat {message.chat.id}"
+            f"Music Player Successfully Deactivated For Users In The Chat!"
         )
     else:
         await message.reply_text(
