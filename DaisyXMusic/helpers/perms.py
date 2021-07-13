@@ -1,7 +1,8 @@
 import asyncio
 from typing import Callable, Coroutine, Dict, List, Tuple, Union
 
-from pyrogram import Client as pbot
+from DaisyXMusic import app as pbot
+from DaisyXMusic import app
 from pyrogram.types import Chat, Message, User
 
 
@@ -41,7 +42,10 @@ async def get_administrators(chat: Chat) -> List[User]:
 
 async def member_permissions(chat_id: int, user_id: int):
     perms = []
-    member = await pbot.get_chat_member(chat_id, user_id)
+    try:
+        member = await app.get_chat_member(chat_id, user_id)
+    except Exception:
+        return []
     if member.can_post_messages:
         perms.append("can_post_messages")
     if member.can_edit_messages:
@@ -58,4 +62,6 @@ async def member_permissions(chat_id: int, user_id: int):
         perms.append("can_invite_users")
     if member.can_pin_messages:
         perms.append("can_pin_messages")
+    if member.can_manage_voice_chats:
+        perms.append("can_manage_voice_chats")
     return perms
