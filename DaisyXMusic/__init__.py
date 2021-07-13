@@ -11,4 +11,3 @@ app = Bot(
 )
 
 app.start()
-run()
