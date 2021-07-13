@@ -15,4 +15,3 @@ app = Client(
 )
 
 app.start()
-idle()
