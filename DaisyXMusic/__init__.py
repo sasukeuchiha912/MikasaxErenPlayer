@@ -1,6 +1,6 @@
 from pyrogram import Client as Bot
 
-from DaisyXMusic.config import API_ID, API_HASH, TOKEN
+from DaisyXMusic.config import API_ID, API_HASH, BOT_TOKEN
 
 app = Bot(
     ":memory:",
