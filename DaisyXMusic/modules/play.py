@@ -273,7 +273,7 @@ async def hfmm(_, message):
         )
     else:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and /musicplayer `off only`"
+            "I only recognize `/musicplayer on` and `/musicplayer off` only"
         )    
         
 
@@ -499,8 +499,8 @@ async def play(_, message: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add assistant to your Group and try again</b>",
+                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
+                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
                     )
     try:
         await USER.get_chat(chid)
@@ -775,8 +775,8 @@ async def ytplay(_, message: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add assistant to your Group and try again</b>",
+                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group! Make sure Mikasa is not banned in group."
+                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
                     )
     try:
         await USER.get_chat(chid)
@@ -921,8 +921,8 @@ async def deezer(client: Client, message_: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add assistant to your Group and try again</b>",
+                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group! Make sure Mikasa is not banned in group."
+                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
                     )
     try:
         await USER.get_chat(chid)
@@ -1059,8 +1059,8 @@ async def jiosaavn(client: Client, message_: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add @MikasaMusicplayer to your Group and try again</b>",
+                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group! Make sure Mikasa is not banned in group."
+                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
                     )
     try:
         await USER.get_chat(chid)
