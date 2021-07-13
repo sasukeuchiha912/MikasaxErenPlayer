@@ -3,7 +3,7 @@ from functools import wraps
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
 
-from DaisyXMusic.comfig import SUDO_USERS
+from DaisyXMusic.config import SUDO_USERS
 from DaisyXMusic.helpers.perms import member_permissions
 from DaisyXMusic import Bot as app
 
