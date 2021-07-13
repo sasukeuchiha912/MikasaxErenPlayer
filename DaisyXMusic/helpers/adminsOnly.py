@@ -2,10 +2,10 @@ from functools import wraps
 
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 from pyrogram.types import Message
+from pyrogram import Client as app
 
 from DaisyXMusic.config import SUDO_USERS
 from DaisyXMusic.helpers.perms import member_permissions
-from DaisyXMusic import Bot as app
 
 async def authorised(func, subFunc2, client, message, *args, **kwargs):
     chatID = message.chat.id
