@@ -1,13 +1,13 @@
-from pyrogram import Client as Bot
+from pyrogram import Client, idle 
 
 from DaisyXMusic.config import API_ID, API_HASH, BOT_TOKEN
 
-app = Bot(
-    ":memory:",
+app = Client(
+    "ErenPyro",
     API_ID,
     API_HASH,
     bot_token=BOT_TOKEN,
-    plugins=dict(root="DaisyXMusic.modules"),
 )
 
 app.start()
+idle()
