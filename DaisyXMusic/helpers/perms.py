@@ -1,7 +1,7 @@
 import asyncio
 from typing import Callable, Coroutine, Dict, List, Tuple, Union
 
-from DaisyXMusic import Bot as pbot
+from pyrogram import Client as pbot
 from pyrogram.types import Chat, Message, User
 
 
