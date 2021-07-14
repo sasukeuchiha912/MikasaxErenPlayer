@@ -1253,10 +1253,11 @@ async def lol_cb(b, cb):
 
         callsmusic.pytgcalls.join_group_call(chat_id, file_path)
         await cb.message.delete()
+        mention = r_by.mention
         await b.send_photo(chat_id,
             photo="final.png",
             reply_markup=keyboard,
-            caption=f"▶️ **Playing** here the song requested by {r_by.mention} via Youtube Music 🎶",
+            caption=f"▶️ **Playing** here the song requested by {mention} via Youtube Music 🎶",
         )
         
         os.remove("final.png")
