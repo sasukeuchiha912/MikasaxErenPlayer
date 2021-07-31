@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+
 import json
 import os
 from os import path
@@ -43,14 +44,15 @@ from DaisyXMusic.helpers.admins import get_administrators
 from DaisyXMusic.helpers.channelmusic import get_chat_id
 from DaisyXMusic.helpers.errors import DurationLimitError
 from DaisyXMusic.helpers.decorators import errors
-from DaisyXMusic.helpers.adminsOnly import adminsOnly
 from DaisyXMusic.helpers.decorators import authorized_users_only
 from DaisyXMusic.helpers.filters import command, other_filters
 from DaisyXMusic.helpers.gets import get_file_name
-from DaisyXMusic.services.callsmusic import callsmusic, queues
+from DaisyXMusic.services.callsmusic import callsmusic
 from DaisyXMusic.services.callsmusic.callsmusic import client as USER
 from DaisyXMusic.services.converter.converter import convert
 from DaisyXMusic.services.downloaders import youtube
+from DaisyXMusic.services.queues import queues
+from DaisyXMusic.helpers.adminsOnly import adminsOnly
 
 aiohttpsession = aiohttp.ClientSession()
 chat_id = None
@@ -214,7 +216,7 @@ async def ee(client, message):
 
 
 @Client.on_message(filters.command("player") & filters.group & ~filters.edited)
-@authorized_users_only
+@adminsOnly("can_manage_voice_chats")
 async def settings(client, message):
     if message.chat.id in DISABLED_GROUPS:
         await message.reply("Music Player is Disabled")
@@ -238,7 +240,7 @@ async def settings(client, message):
 @Client.on_message(
     filters.command("musicplayer") & ~filters.edited & ~filters.bot & ~filters.private
 )
-@adminsOnly("can_change_info")
+@adminsOnly("can_manage_voice_chats")
 async def hfmm(_, message):
     global DISABLED_GROUPS
     try:
@@ -247,7 +249,7 @@ async def hfmm(_, message):
         return
     if len(message.command) != 2:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and `/musicplayer off` only"
+            "I only recognize `/musicplayer on` and /musicplayer `off only`"
         )
         return
     status = message.text.split(None, 1)[1]
@@ -259,7 +261,7 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.remove(message.chat.id)
         await lel.edit(
-            f"Music Player Successfully Enabled For Users In The Chat!"
+            f"Music Player Successfully Enabled For Users In The Chat {message.chat.id}"
         )
 
     elif status == "OFF" or status == "off" or status == "Off":
@@ -270,11 +272,11 @@ async def hfmm(_, message):
             return
         DISABLED_GROUPS.append(message.chat.id)
         await lel.edit(
-            f"Music Player Successfully Deactivated For Users In The Chat!"
+            f"Music Player Successfully Deactivated For Users In The Chat {message.chat.id}"
         )
     else:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and `/musicplayer off` only"
+            "I only recognize `/musicplayer on` and /musicplayer `off only`"
         )    
         
 
@@ -457,7 +459,7 @@ async def play(_, message: Message):
     global useer
     if message.chat.id in DISABLED_GROUPS:
         return    
-    lel = await message.reply("🎵 **Processing....**")
+    lel = await message.reply("🎶 **Processing**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
@@ -500,9 +502,7 @@ async def play(_, message: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
-                    )
+                        f"Error Occurred! Make sure Mikasa is not banned in the group or add her manually!")   
     try:
         await USER.get_chat(chid)
         # lmoa = await client.get_chat_member(chid,wew)
@@ -512,7 +512,7 @@ async def play(_, message: Message):
         )
         return
     text_links=None
-    await lel.edit("🔎 **Finding the song**")
+    await lel.edit("🔎 **Searching the song in Youtube**")
     if message.reply_to_message:
         entities = []
         toxt = message.reply_to_message.text or message.reply_to_message.caption
@@ -624,7 +624,7 @@ async def play(_, message: Message):
             emojilist = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣",]
 
             while j < 5:
-                toxxt += f"{emojilist[j]} [Title - {results[j]['title']}](https://youtube.com{results[j]['url_suffix']})\n"
+                toxxt += f"{emojilist[j]} **Title - [{results[j]['title']}](https://youtube.com{results[j]['url_suffix']})**\n"
                 toxxt += f" ╚ **Duration** - {results[j]['duration']}\n"
                 toxxt += f" ╚ **Views** - {results[j]['views']}\n"
                 toxxt += f" ╚ **Channel** - {results[j]['channel']}\n\n"
@@ -641,7 +641,7 @@ async def play(_, message: Message):
                         InlineKeyboardButton("4️⃣", callback_data=f'plll 3|{query}|{user_id}'),
                         InlineKeyboardButton("5️⃣", callback_data=f'plll 4|{query}|{user_id}'),
                     ],
-                    [InlineKeyboardButton(text="❌", callback_data="cls")],
+                    [InlineKeyboardButton(text="Close 🛑", callback_data="cls")],
                 ]
             )       
             await lel.edit(toxxt,reply_markup=koyboard,disable_web_page_preview=True)
@@ -720,7 +720,7 @@ async def play(_, message: Message):
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
-            caption="▶️ **Playing** here the song requested by {} via Youtube Music 🎶".format(
+            caption="🎧 **Playing** here the song requested by {} via Youtube Music 🎵".format(
                 message.from_user.mention()
             ),
         )
@@ -733,7 +733,7 @@ async def ytplay(_, message: Message):
     global que
     if message.chat.id in DISABLED_GROUPS:
         return
-    lel = await message.reply("🎵 **Processing**")
+    lel = await message.reply("🔄 **Processing**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
@@ -776,9 +776,7 @@ async def ytplay(_, message: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group! Make sure Mikasa is not banned in group."
-                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
-                    )
+                      f"Error Occurred! Make sure Mikasa is not banned in the group or add her manually!")   
     try:
         await USER.get_chat(chid)
         # lmoa = await client.get_chat_member(chid,wew)
@@ -868,7 +866,7 @@ async def ytplay(_, message: Message):
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
-            caption="▶️ **Playing** here the song requested by {} via Youtube Music 🎵".format(
+            caption="▶️ **Playing** here the song requested by {} via Youtube Music 😜".format(
                 message.from_user.mention()
             ),
         )
@@ -880,13 +878,13 @@ async def deezer(client: Client, message_: Message):
     if message_.chat.id in DISABLED_GROUPS:
         return
     global que
-    lel = await message_.reply("🔄 **Processing**")
+    lel = await message_.reply("🎶 **Processing**")
     administrators = await get_administrators(message_.chat)
     chid = message_.chat.id
     try:
         user = await USER.get_me()
     except:
-        user.first_name = "DaisyMusic"
+        user.first_name = "Mikasa"
     usar = user
     wew = usar.id
     try:
@@ -914,7 +912,7 @@ async def deezer(client: Client, message_: Message):
                         message_.chat.id, "I joined this group for playing music in VC"
                     )
                     await lel.edit(
-                        "<b>helper userbot joined your chat</b>",
+                        "<b>Mikasa joined the chat</b>",
                     )
 
                 except UserAlreadyParticipant:
@@ -922,9 +920,7 @@ async def deezer(client: Client, message_: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group! Make sure Mikasa is not banned in group."
-                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
-                    )
+                        f"Error Occurred! Make sure Mikasa is not banned in the group or add her manually!")   
     try:
         await USER.get_chat(chid)
         # lmoa = await client.get_chat_member(chid,wew)
@@ -1017,8 +1013,8 @@ async def deezer(client: Client, message_: Message):
 async def jiosaavn(client: Client, message_: Message):
     global que
     if message_.chat.id in DISABLED_GROUPS:
-        return     
-    lel = await message_.reply("🎵**Processing**...")
+        return    
+    lel = await message_.reply("🎧 **Processing**")
     administrators = await get_administrators(message_.chat)
     chid = message_.chat.id
     try:
@@ -1049,10 +1045,10 @@ async def jiosaavn(client: Client, message_: Message):
                 try:
                     await USER.join_chat(invitelink)
                     await USER.send_message(
-                        message_.chat.id, "I joined this group for playing music in VC"
+                        message_.chat.id, "I joined this group for playing music in voice chat"
                     )
                     await lel.edit(
-                        "<b>helper userbot joined your chat</b>",
+                        "<b>Mikasa has joined the chat</b>",
                     )
 
                 except UserAlreadyParticipant:
@@ -1060,15 +1056,13 @@ async def jiosaavn(client: Client, message_: Message):
                 except Exception:
                     # print(e)
                     await lel.edit(
-                        f"<i>❗ Flood Wait Error ❗Mikasa couldn't join your group! Make sure Mikasa is not banned in group."
-                        "\n\nOr manually add @MikasaMusicPlayer to your Group and try again</i>",
-                    )
+                        f"Error Occurred! Make sure Mikasa is not banned in the group or add her manually!")
     try:
         await USER.get_chat(chid)
         # lmoa = await client.get_chat_member(chid,wew)
     except:
         await lel.edit(
-            "<i> helper Userbot not in this chat, Ask admin to send /play command for first time or add assistant manually</i>"
+            "<i> Mikasa is not in this chat, Ask an Admin to send /userbotjoin </i>"
         )
         return
     requested_by = message_.from_user.first_name
@@ -1173,7 +1167,7 @@ async def lol_cb(b, cb):
     if cb.from_user.id != useer_id:
         await cb.answer("You ain't the person who requested to play the song!", show_alert=True)
         return
-    await cb.message.edit("Mikasa is Getting ready to play music hang on.....")
+    await cb.message.edit("Mikasa is getting ready to play music hang on..")
     x=int(x)
     try:
         useer_name = cb.message.reply_to_message.from_user.first_name
@@ -1253,11 +1247,10 @@ async def lol_cb(b, cb):
 
         callsmusic.pytgcalls.join_group_call(chat_id, file_path)
         await cb.message.delete()
-        mention = r_by.mention
         await b.send_photo(chat_id,
             photo="final.png",
             reply_markup=keyboard,
-            caption=f"▶️ **Playing** here the song requested by {mention} via Youtube Music 🎶",
+            caption=f"▶️ **Playing** here the song requested by {r_by.mention} via Youtube Music 😜",
         )
         
         os.remove("final.png")
