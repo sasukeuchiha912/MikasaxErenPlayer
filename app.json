@@ -1,5 +1,5 @@
 {
-  "name": "DaisyXMusic",
+  "name": "MikasaPlayer",
   "description": "Open-Source bot to play songs in your Telegram's Group Voice Chat. Powered by PyTgCalls.",
   "keywords": ["music", "voicechat", "telegram"],
   "repository": "https://github.com/sasukeuchiha912/MikasaxErenPlayer",
@@ -14,9 +14,7 @@
    {
      "url": "heroku/nodejs"
    }  
-   {
-     "url": "https://github.com/moxak/heroku-buildpack-youtube-dl-latest"
-   }
+
   ],        
   "env": {
     "SESSION_NAME": {
@@ -39,12 +37,12 @@
     "SUPPORT_GROUP": {
       "description": "Your MusicPlayer support group without @ [Leave this if you don't have one]",
       "required": false,
-      "value": "DaisySupport_Official"
+      "value": "FoundingTitanSupport"
     },
     "PROJECT_NAME": {
       "description": "Your MusicPlayer project Name.",
       "required": false,
-      "value": "DaisyXMusic v4"
+      "value": "MikasaxErenPlayer"
     },
     "ASSISTANT_NAME": {
       "description": "Your MusicPlayer's assistant Username without @.",
@@ -53,7 +51,7 @@
     "ARQ_API_KEY": {
       "description": "Get from @ARQRobot.",
       "required": false,
-      "value": "VKSSQH-SRNJYZ-MSOJAI-QALESR-ARQ"
+      "value": "TYMIGM-KMFTQN-ZTGNOC-AGXBYI-ARQ"
     },    
     "BG_IMAGE": {
       "description": "BG image of bot (Use transparent one) [IGNORE].",
