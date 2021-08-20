@@ -73,10 +73,13 @@ def cb_admin_check(func: Callable) -> Callable:
 
 def transcode(filename):
     ffmpeg.input(filename).output(
-        "input.raw", format="s16le", acodec="pcm_s16le", ac=2, ar="48k"
+        "input.raw", 
+        format="s16le", 
+        acodec="pcm_s16le", 
+        ac=2, 
+        ar="48k"
     ).overwrite_output().run()
     os.remove(filename)
-
 
 # Convert seconds to mm:ss
 def convert_seconds(seconds):
@@ -424,15 +427,15 @@ async def m_cb(b, cb):
         if chet_id not in callsmusic.pytgcalls.active_calls:
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            callsmusic.queues.task_done(chet_id)
+            queues.task_done(chet_id)
 
-            if callsmusic.queues.is_empty(chet_id):
+            if queues.is_empty(chet_id):
                 callsmusic.pytgcalls.leave_group_call(chet_id)
 
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
                 callsmusic.pytgcalls.change_stream(
-                    chet_id, callsmusic.queues.get(chet_id)["file"]
+                    chet_id, queues.get(chet_id)["file"]
                 )
                 await cb.answer("Skipped")
                 await cb.message.edit((m_chat, qeue), reply_markup=r_ply(the_data))
@@ -443,7 +446,7 @@ async def m_cb(b, cb):
     else:
         if chet_id in callsmusic.pytgcalls.active_calls:
             try:
-                callsmusic.queues.clear(chet_id)
+                queues.clear(chet_id)
             except QueueEmpty:
                 pass
 
@@ -566,7 +569,7 @@ async def play(_, message: Message):
     elif urls:
         query = toxt
         await lel.edit("🎵 **Processing**")
-        ydl_opts = {"format": "bestaudio[ext=m4a]"}
+        ydl_opts = {"format": "bestaudio/best"}
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
             url = f"https://youtube.com{results[0]['url_suffix']}"
@@ -610,7 +613,7 @@ async def play(_, message: Message):
             query += " " + str(i)
         print(query)
         await lel.edit("🎵 **Processing**")
-        ydl_opts = {"format": "bestaudio[ext=m4a]"}
+        ydl_opts = {"format": "bestaudio/best"}
         
         try:
           results = YoutubeSearch(query, max_results=5).to_dict()
@@ -795,7 +798,7 @@ async def ytplay(_, message: Message):
         query += " " + str(i)
     print(query)
     await lel.edit("🎵 **Processing**")
-    ydl_opts = {"format": "bestaudio[ext=m4a]"}
+    ydl_opts = {"format": "bestaudio/best"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         url = f"https://youtube.com{results[0]['url_suffix']}"
@@ -1250,9 +1253,16 @@ async def lol_cb(b, cb):
         await b.send_photo(chat_id,
             photo="final.png",
             reply_markup=keyboard,
-            caption=f"▶️ **Playing** here the song requested by {r_by.mention} via Youtube Music 😜",
+            caption=f"▶️ **Playing** here the song requested by {r_by.mention} via Youtube Music 🎵",
         )
         
         os.remove("final.png")
 
-# Have u read all. If read RESPECT :-)
+
+@Client.on_message(command("leavevc"))
+@adminsOnly("can_manage_voice_chats")
+async def leavevc(_, message: Message):    
+    leaving = await message.reply("Leaving voice chat...")        
+    callsmusic.pytgcalls.leave_group_call(message.chat.id)
+    leaving.edit("Left voice chat successfully")
+      
