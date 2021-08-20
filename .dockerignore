@@ -1,12 +1,6 @@
-local.env
-*.log
-.git/
-.idea/
-str.py
-Procfile
+LICENSE
 README.md
-downloads/
-raw_files/
+.env
 .gitignore
-runtime.txt
+.git/
 __pycache__/
