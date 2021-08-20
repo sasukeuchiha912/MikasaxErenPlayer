@@ -27,7 +27,7 @@
 ## 🚀 Deployment
 
 ### 💜 Heroku
-
+# I fkig don't know wtf is wrong in app.json 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/sasukeuchiha912/MikasaxErenPlayer/tree/master) 
 
 Get pyrogram (p)  `SESSION` from here:
