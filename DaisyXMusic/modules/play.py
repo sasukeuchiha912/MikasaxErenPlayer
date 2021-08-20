@@ -1258,16 +1258,14 @@ async def lol_cb(b, cb):
         
         os.remove("final.png")
 
-"""
 @Client.on_message(command("leavevc"))
 @adminsOnly("can_manage_voice_chats")
 async def leavevc(_, message: Message):
 	leaving = await message.reply("Leaving voice chat...")
 	try:
-	    callsmusic.pytgcalls.leave_voice_chat(message.chat.id)
+	    callsmusic.pytgcalls.leave_group_call(message.chat.id)
 	    leaving.edit("Left voice chat successfully!")
 	except Exception as e:
-    		print(e)
+    	    print(e)
 	else:
 	    message.reply("Haven't joined the voice chat yet!")
-"""
