@@ -53,11 +53,11 @@ from DaisyXMusic.services.converter.converter import convert
 from DaisyXMusic.services.downloaders import youtube
 from DaisyXMusic.services.queues import queues
 from DaisyXMusic.helpers.adminsOnly import adminsOnly
+import DaisyXMusic.database as db
 
 aiohttpsession = aiohttp.ClientSession()
 chat_id = None
 arq = ARQ("https://thearq.tech", ARQ_API_KEY, aiohttpsession)
-DISABLED_GROUPS = []
 useer ="NaN"
 def cb_admin_check(func: Callable) -> Callable:
     async def decorator(client, cb):
@@ -141,7 +141,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
 @Client.on_message(filters.command("playlist") & filters.group & ~filters.edited)
 async def playlist(client, message):
     global que
-    if message.chat.id in DISABLED_GROUPS:
+    if db.is_music(message.chat.id):
         return    
     queue = que.get(message.chat.id)
     if not queue:
@@ -208,7 +208,7 @@ def r_ply(type_):
 
 @Client.on_message(filters.command("current") & filters.group & ~filters.edited)
 async def ee(client, message):
-    if message.chat.id in DISABLED_GROUPS:
+    if db.is_music(message.chat.id):
         return
     queue = que.get(message.chat.id)
     stats = updated_stats(message.chat, queue)
@@ -221,7 +221,7 @@ async def ee(client, message):
 @Client.on_message(filters.command("player") & filters.group & ~filters.edited)
 @adminsOnly("can_manage_voice_chats")
 async def settings(client, message):
-    if message.chat.id in DISABLED_GROUPS:
+    if db.is_music(message.chat.id):
         await message.reply("Music Player is Disabled")
         return    
     playing = None
@@ -245,41 +245,37 @@ async def settings(client, message):
 )
 @adminsOnly("can_manage_voice_chats")
 async def hfmm(_, message):
-    global DISABLED_GROUPS
+    is_enabled = db.is_music(message.chat.id)
     try:
         user_id = message.from_user.id
     except:
         return
     if len(message.command) != 2:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and /musicplayer `off only`"
+            "I only recognize `/musicplayer on` and `/musicplayer off` only"
         )
         return
     status = message.text.split(None, 1)[1]
     message.chat.id
     if status == "ON" or status == "on" or status == "On":
-        lel = await message.reply("`Processing...`")
-        if not message.chat.id in DISABLED_GROUPS:
-            await lel.edit("Music Player Already Activated In This Chat")
-            return
-        DISABLED_GROUPS.remove(message.chat.id)
-        await lel.edit(
-            f"Music Player Successfully Enabled For Users In The Chat {message.chat.id}"
-        )
+        lel = await message.reply("Processing....")      
+        if not is_enabled:
+            db.set_music(message.chat.id)        
+            await lel.edit("Enabled MusicPlayer in this chat! Have fun listening to songs :)")
+        await message.reply("Music Player is already enabled here!")            
 
     elif status == "OFF" or status == "off" or status == "Off":
         lel = await message.reply("`Processing...`")
-        
-        if message.chat.id in DISABLED_GROUPS:
-            await lel.edit("Music Player Already turned off In This Chat")
-            return
-        DISABLED_GROUPS.append(message.chat.id)
+        if not is_enabled:
+            message.reply("Music Player is not Enabled here in first place!")
+        return
+        db.rem_music(message.chat.id)
         await lel.edit(
             f"Music Player Successfully Deactivated For Users In The Chat {message.chat.id}"
         )
     else:
         await message.reply_text(
-            "I only recognize `/musicplayer on` and /musicplayer `off only`"
+            "I only recognize `/musicplayer on` and `/musicplayer off` only"
         )    
         
 
@@ -460,7 +456,7 @@ async def m_cb(b, cb):
 async def play(_, message: Message):
     global que
     global useer
-    if message.chat.id in DISABLED_GROUPS:
+    if db.is_music(message.chat.id):
         return    
     lel = await message.reply("🎶 **Processing**")
     administrators = await get_administrators(message.chat)
@@ -734,7 +730,7 @@ async def play(_, message: Message):
 @Client.on_message(filters.command("ytplay") & filters.group & ~filters.edited)
 async def ytplay(_, message: Message):
     global que
-    if message.chat.id in DISABLED_GROUPS:
+    if db.is_music(message.chat.id):
         return
     lel = await message.reply("🔄 **Processing**")
     administrators = await get_administrators(message.chat)
@@ -878,7 +874,7 @@ async def ytplay(_, message: Message):
     
 @Client.on_message(filters.command("dplay") & filters.group & ~filters.edited)
 async def deezer(client: Client, message_: Message):
-    if message_.chat.id in DISABLED_GROUPS:
+    if db.is_music(message_.chat.id):
         return
     global que
     lel = await message_.reply("🎶 **Processing**")
@@ -1015,7 +1011,7 @@ async def deezer(client: Client, message_: Message):
 @Client.on_message(filters.command("splay") & filters.group & ~filters.edited)
 async def jiosaavn(client: Client, message_: Message):
     global que
-    if message_.chat.id in DISABLED_GROUPS:
+    if db.is_music(message_.chat.id):
         return    
     lel = await message_.reply("🎧 **Processing**")
     administrators = await get_administrators(message_.chat)
@@ -1261,6 +1257,8 @@ async def lol_cb(b, cb):
 @Client.on_message(command("leavevc"))
 @adminsOnly("can_manage_voice_chats")
 async def leavevc(_, message: Message):
+	if db.is_music(message.chat.id):
+	    return 
 	leaving = await message.reply("Leaving voice chat...")
 	try:
 	    callsmusic.pytgcalls.leave_group_call(message.chat.id)
