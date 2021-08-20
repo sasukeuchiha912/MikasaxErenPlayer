@@ -1258,7 +1258,7 @@ async def lol_cb(b, cb):
         
         os.remove("final.png")
 
-
+"""
 @Client.on_message(command("leavevc"))
 @adminsOnly("can_manage_voice_chats")
 async def leavevc(_, message: Message):
@@ -1270,3 +1270,4 @@ async def leavevc(_, message: Message):
     		print(e)
 	else:
 	    message.reply("Haven't joined the voice chat yet!")
+"""
